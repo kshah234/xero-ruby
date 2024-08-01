@@ -42,7 +42,7 @@ module XeroRuby::Accounting
     
     # For bank accounts only. See Bank Account types
     attr_accessor :bank_account_type
-    BANK ||= "BANK".freeze
+    BANK |||||= "BANK".freeze
     CREDITCARD ||= "CREDITCARD".freeze
     PAYPAL ||= "PAYPAL".freeze
     NONE ||= "NONE".freeze
