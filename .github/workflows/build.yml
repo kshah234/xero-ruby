@@ -1,0 +1,33 @@
+name: Build and Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - master
+      - ruby-workflows-poc
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Ruby 2.6
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '2.6'
+
+      - name: Install dependencies
+        run: bundle install
+
+      - name: Compile build
+        run: |
+          find . -name "*.rb" | xargs -n 1 ruby -c || exit 1
+
+      - name: Run tests
+        run: bundle exec rake
