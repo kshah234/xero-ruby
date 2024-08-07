@@ -26,7 +26,8 @@ jobs:
         run: bundle install
 
       - name: Compile build
-        run: find . -name "*.rb" | xargs -n 1 ruby -c || exit 1
+        run: |
+          find . -name "*.rb" | xargs -n 1 ruby -c || exit 1
 
       - name: Run tests
         run: bundle exec rake

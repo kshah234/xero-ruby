@@ -1,0 +1,31 @@
+name: Deploy
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Ruby 2.6
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '2.6'
+
+      - name: Install dependencies
+        run: bundle install
+
+      - name: Build gem
+        run: gem build
+
+      - name: Publish to RubyGems
+        env:
+          RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
+        run: |
+          GEM_FILE=$(ls *.gem | grep xero-ruby- | sort -V | tail -n 1)
+          gem push $GEM_FILE
